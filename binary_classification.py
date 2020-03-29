@@ -111,8 +111,19 @@ def evaluate_model(test_dl, model):
         ## retrieve np arrays
         yhat = yhat.detach().numpy()
         actual = targets.numpy()
-        actual = actual.reshape()
+        actual = actual.reshape((len(actual),1))
+        ## Round into class values
+        yhat = yhat.round()
+        #store
+        predictions.append(yhat)
+        actuals.append(actual)
+    predictions, actuals = vstack(predictions), vstack(actual)
+    # calculate accuracy
+    acc = accuracy_score(actuals, predictions)
 
+    return acc
+
+## make a class prediction for one row of data
 
 
 
