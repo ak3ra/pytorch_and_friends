@@ -87,7 +87,31 @@ def prepare_data(path):
 def train_model(train_dl, model):
     ## Optimizer 
     criterion = BCELoss()
-    optimizer = SGD(model.parameters(), lr = 0.01, )
+    optimizer = SGD(model.parameters(), lr = 0.01, momentum=0.9)
+    ## enumerate epochs
+    for epoch in range(100):
+        for i, (inputs, targets) in enumerate(train_dl):
+            ##Clear the gradients
+            optimizer.zero_grad()
+            ## compute the model output
+            yhat = model(inputs)
+            ## Calculate the loss
+            loss = criterion(y_hat, targets)
+            ## credit assignment
+            loss.backward()
+            ## update model weights
+            optimizer.step()
+## evaluate the model
+
+def evaluate_model(test_dl, model):
+    predictions, actuals = list(), list()
+    for i, (inputs, targets) in enumerate(test_dl):
+        ## evaluate the model on the test set
+        yhat = model(inputs)
+        ## retrieve np arrays
+        yhat = yhat.detach().numpy()
+        actual = targets.numpy()
+        actual = actual.reshape()
 
 
 
