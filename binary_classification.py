@@ -1,6 +1,8 @@
 from numpy import vstack
 from pandas import read_csv
 from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import accuracy_score
+from torch import Tensor
 from torch.utils.data import random_split
 from torch.nn.init import kaiming_uniform_
 from torch.nn.init import xavier_uniform_
@@ -65,15 +67,15 @@ class MLP(Module):
 
         ## Forward propagate input
 
-        def forward(self, X):
-            X = self.hidden1(X)
-            X = self.act1(X)
-            X = self.hidden2(X)
-            X = self.act2(X)
-            X = self.hidden3(X)
-            X = self.act3(X)
+    def forward(self, X):
+        X = self.hidden1(X)
+        X = self.act1(X)
+        X = self.hidden2(X)
+        X = self.act2(X)
+        X = self.hidden3(X)
+        X = self.act3(X)
 
-            return X
+        return X
 
 def prepare_data(path):
     data = CSVDataset(path)
@@ -90,15 +92,16 @@ def train_model(train_dl, model):
     criterion = BCELoss()
     optimizer = SGD(model.parameters(), lr = 0.01, momentum=0.9)
     ## enumerate epochs
-    for epoch in range(100):
+    for epoch in range(1000):
         for i, (inputs, targets) in enumerate(train_dl):
             ##Clear the gradients
             optimizer.zero_grad()
             ## compute the model output
             yhat = model(inputs)
             ## Calculate the loss
-            loss = criterion(y_hat, targets)
+            loss = criterion(yhat, targets)
             ## credit assignment
+            print(loss)
             loss.backward()
             ## update model weights
             optimizer.step()
