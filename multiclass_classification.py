@@ -5,6 +5,13 @@ iris species using a multi-layered perceptron
 
 from numpy import vstack
 import torch
+from torch.nn import Module
+from torch.nn import Linear
+from torch.nn.init import kaiming_uniform_
+from torch.nn.init import xavier_uniform_
+from torch.nn import ReLU
+from torch.nn import Softmax
+from torch import Tensor
 from torch.utils.data import Dataset
 from torch.utils.data import random_split
 import pandas as pd
@@ -39,5 +46,23 @@ class CSVDataset(Dataset):
         ## calculate the split
         return random_split(self,[train_size, test_size])
 
+
+## Model Definition
+
+class MLP(Module):
+    ## model elements
+    def __init__(self, n_inputs):
+        super(MLP, self).__init__()
+        ## 1st hidden layer 
+        self.hidden1 = Linear(n_inputs, 10)
+        kaiming_uniform_(self.hidden1.weight, nonlinearity='relu')
+        self.act1 = ReLU()
+        ## second hidden layer
+        self.hidden2 = Linear(10,8)
+        kaiming_uniform_(self.hidden2.weight, nonlinearity='relu')
+        self.act2 = ReLU()
+        self.hidden3 = Linear(8, 3)
+        xavier_uniform_(self.hidden3.weight)
+        self.act3 = Softmax(dim=1)
      
 
