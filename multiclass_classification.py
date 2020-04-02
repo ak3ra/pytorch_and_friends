@@ -65,4 +65,11 @@ class MLP(Module):
         xavier_uniform_(self.hidden3.weight)
         self.act3 = Softmax(dim=1)
      
+    def forward(self, X):
+        X = self.hidden1(X)
+        X = self.act1(X)
+        X = self.hidden2(X)
+        X = self.act2(X)
+        X = self.act3(X)
+        return X
 
