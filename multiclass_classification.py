@@ -74,5 +74,6 @@ class MLP(Module):
         return X
 
     def data_prep(path):
+        ## test
         dataset = CSVDataset(path)
 
