@@ -73,5 +73,6 @@ class MLP(Module):
         X = self.act3(X)
         return X
 
-    def data
+    def data_prep(path):
+        dataset = CSVDataset(path)
 
