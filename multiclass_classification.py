@@ -73,7 +73,14 @@ class MLP(Module):
         X = self.act3(X)
         return X
 
-    def data_prep(path):
-        ## test
+    def prepare_dataset(path):
+        ## load the dataset
         dataset = CSVDataset(path)
+        #calculate split
+        train, test = dataset.get_splits()
+        ## Data Loaders
+        train_dl = DataLoader(train, batch_size = 32, shuffle=True)
+        test_dl = DataLoader(test, batch_size = 1024, shuffle=False)
+        return train_dl, test_dl
+    
 
