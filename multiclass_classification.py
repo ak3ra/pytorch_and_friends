@@ -73,3 +73,5 @@ class MLP(Module):
         X = self.act3(X)
         return X
 
+    def data
+
