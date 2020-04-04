@@ -132,3 +132,16 @@ def predict(row, model):
     yhat = yhat.detach().numpy()
 
     return yhat
+
+## prepare dataset
+path = 'https://raw.githubusercontent.com/jbrownlee/Datasets/master/iris.csv'
+train_dl, test_dl = prepare_dataset(path)
+print(len(train_dl.dataset), len(test_dl))
+## define the network
+model = MLP(4)
+# train the model
+acc = evaluate_model(test_dl, model)
+print('Accuracy: %.3f', %acc)
+row = [5.1,3.5,1.4,0.2]
+yhat = predict(row, model)
+print('Predicted: %s (class=%d)' % (yhat, argmax(yhat)))
