@@ -92,7 +92,7 @@ def train_model(train_dl, model):
     criterion = BCELoss()
     optimizer = SGD(model.parameters(), lr = 0.01, momentum=0.9)
     ## enumerate epochs
-    for epoch in range(1000):
+    for epoch in range(100):
         for i, (inputs, targets) in enumerate(train_dl):
             ##Clear the gradients
             optimizer.zero_grad()

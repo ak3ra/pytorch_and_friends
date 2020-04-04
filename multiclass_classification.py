@@ -111,5 +111,15 @@ def evaluate_model(test_dl, model):
         # Retrieve numpy array
         yhat = yhat.detech().numpy()
         actual = targets.numpy()
-        # convert time models
-        
+        yhat = argmax(yhat, axis=1)
+        # reshape for stacking
+        actual = actual.reshape((len(actual), 1))
+        yhat = yhat.reshape((len(yhat), 1))
+        # store
+        predictions.append(yhat)
+        actuals.append(actual)
+    predictions, actuals = vstack(predictions), vstack(actuals)
+    ## calculate accuracy
+    acc = accuracy_score(actuals, predictions)
+    return acc
+
