@@ -109,7 +109,7 @@ def evaluate_model(test_dl, model):
         # Evaluate model
         yhat = model(inputs)
         # Retrieve numpy array
-        yhat = yhat.detech().numpy()
+        yhat = yhat.detach().numpy()
         actual = targets.numpy()
         yhat = argmax(yhat, axis=1)
         # reshape for stacking
