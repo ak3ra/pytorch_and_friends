@@ -15,10 +15,10 @@ from torch.nn import CrossEntropyLoss
 from torch import Tensor
 from torch.optim import SGD
 from torch.utils.data import Dataset
+from torch.utils.data import DataLoader
 from torch.utils.data import random_split
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import test_train_split
 
 class CSVDataset(Dataset):
     # Load the dataset
