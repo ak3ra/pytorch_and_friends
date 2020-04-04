@@ -10,6 +10,7 @@ from torch.nn import Linear
 from torch.nn.init import kaiming_uniform_
 from torch.nn.init import xavier_uniform_
 from torch.nn import ReLU
+import numpy
 from torch.nn import Softmax
 from torch.nn import CrossEntropyLoss
 from torch import Tensor
@@ -111,7 +112,7 @@ def evaluate_model(test_dl, model):
         # Retrieve numpy array
         yhat = yhat.detach().numpy()
         actual = targets.numpy()
-        yhat = argmax(yhat, axis=1)
+        yhat = numpy.argmax(yhat, axis=1)
         # reshape for stacking
         actual = actual.reshape((len(actual), 1))
         yhat = yhat.reshape((len(yhat), 1))
