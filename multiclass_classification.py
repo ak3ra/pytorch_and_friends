@@ -11,7 +11,9 @@ from torch.nn.init import kaiming_uniform_
 from torch.nn.init import xavier_uniform_
 from torch.nn import ReLU
 from torch.nn import Softmax
+from torch.nn import CrossEntropyLoss
 from torch import Tensor
+from torch.optim import SGD
 from torch.utils.data import Dataset
 from torch.utils.data import random_split
 import pandas as pd
@@ -73,14 +75,41 @@ class MLP(Module):
         X = self.act3(X)
         return X
 
-    def prepare_dataset(path):
-        ## load the dataset
-        dataset = CSVDataset(path)
-        #calculate split
-        train, test = dataset.get_splits()
-        ## Data Loaders
-        train_dl = DataLoader(train, batch_size = 32, shuffle=True)
-        test_dl = DataLoader(test, batch_size = 1024, shuffle=False)
-        return train_dl, test_dl
-    
+def prepare_dataset(path):
+    ## load the dataset
+    dataset = CSVDataset(path)
+    #calculate split
+    train, test = dataset.get_splits()
+    ## Data Loaders
+    train_dl = DataLoader(train, batch_size = 32, shuffle=True)
+    test_dl = DataLoader(test, batch_size = 1024, shuffle=False)
+    return train_dl, test_dl
 
+def train_model(train_dl, model):
+    criterion = CrossEntropyLoss()
+    optimizer = SGD(model.parameters(), lr = 0.01, momentum=0.9)
+    # enumerate epochs
+    for epoch in range(500):
+        #enumerate mini batches
+        for i, (inputs, targets) in enumerate(train_dl):
+            ## clear the gradients
+            optimizer.zero_grad()
+            ## compute the model output
+            yhat = model(inputs)
+            ## calculate the loss
+            loss = criterion(yhat, targets)
+            ## credit assignments
+            loss.backward()
+            ## Update model weights
+            optimizer.step()
+
+def evaluate_model(test_dl, model):
+    predictions, actual = list(), list()
+    for i, (inputs, targets) in enumerate(test_dl):
+        # Evaluate model
+        yhat = model(inputs)
+        # Retrieve numpy array
+        yhat = yhat.detech().numpy()
+        actual = targets.numpy()
+        # convert time models
+        
