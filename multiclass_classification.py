@@ -19,6 +19,7 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torch.utils.data import random_split
 import pandas as pd
+from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 
 class CSVDataset(Dataset):
@@ -105,7 +106,7 @@ def train_model(train_dl, model):
             optimizer.step()
 
 def evaluate_model(test_dl, model):
-    predictions, actual = list(), list()
+    predictions, actuals = list(), list()
     for i, (inputs, targets) in enumerate(test_dl):
         # Evaluate model
         yhat = model(inputs)
@@ -145,4 +146,4 @@ acc = evaluate_model(test_dl, model)
 print('Accuracy: %.3f' % acc)
 row = [5.1,3.5,1.4,0.2]
 yhat = predict(row, model)
-print('Predicted: %s (class=%d)' % (yhat, argmax(yhat)))
+print('Predicted: %s (class=%d)' % (yhat, numpy.argmax(yhat)))
