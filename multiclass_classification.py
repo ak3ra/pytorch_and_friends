@@ -123,3 +123,12 @@ def evaluate_model(test_dl, model):
     acc = accuracy_score(actuals, predictions)
     return acc
 
+def predict(row, model):
+    ## convert row to data
+    row = Tensor([row])
+    ## make a prediction
+    yhat = model(row)
+    # retrieve numpy array
+    yhat = yhat.detach().numpy()
+
+    return yhat
