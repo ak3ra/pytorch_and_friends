@@ -80,12 +80,13 @@ def evaluate_model(test_dl, model):
     for i, (inputs, targets) in enumerate(test_dl):
         yhat = model(inputs)
         yhat = yhat.detach().numpy()
-        actual = actual.reshape()
+        actual = targets.numpy()
+        actual = actual.reshape((len(actual), 1))
         predictions.append(yhat)
         actuals.append(actual)
 
     predictions, actuals = vstack(predictions), vstack(actuals)
-    mse = means_squared_error(actuals, predictions)
+    mse = mean_squared_error(actuals, predictions)
     return mse
 
 
