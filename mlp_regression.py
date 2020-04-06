@@ -1,11 +1,14 @@
 import numpy as np 
 from numpy import vstack
+from sklearn.metrics import means_squared_error
 from torch.utils.data import Dataset
 from torch.utils.data import random_splt
 from pandas import read_csv
 from torch.nn import Module
 from torch.nn.init import xavier_uniform_
-from torch.nn import Linear, Sigmoid
+from torch.nn import Linear, Sigmoid, MSELoss
+from torch import Tensor
+from torch.optim import SGD
 
 
 
@@ -74,4 +77,14 @@ def train_model(train_dl, model):
 
 def evaluate_model(test_dl, model):
     predictions, actuals = list(), list()
-    
+    for i, (inputs, targets) in enumerate(test_dl):
+        yhat = model(inputs)
+        yhat = that.detach.numpy()
+        actual = actual.reshape()
+        predictions.append(yhat)
+        actuals.append(actual)
+
+    predictions, actuals = vstack(predictions), vstack(actuals)
+    mse = means_squared_error(actuals, predictions)
+    return mse
+
