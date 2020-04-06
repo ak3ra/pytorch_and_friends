@@ -2,7 +2,7 @@ import numpy as np
 from numpy import vstack
 from sklearn.metrics import mean_squared_error
 from torch.utils.data import Dataset
-from torch.utils.data import random_splt
+from torch.utils.data import random_split, DataLoader
 from pandas import read_csv
 from torch.nn import Module
 from torch.nn.init import xavier_uniform_
@@ -79,7 +79,7 @@ def evaluate_model(test_dl, model):
     predictions, actuals = list(), list()
     for i, (inputs, targets) in enumerate(test_dl):
         yhat = model(inputs)
-        yhat = that.detach.numpy()
+        yhat = yhat.detach.numpy()
         actual = actual.reshape()
         predictions.append(yhat)
         actuals.append(actual)
