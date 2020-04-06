@@ -10,8 +10,6 @@ from torch.nn import Linear, Sigmoid, MSELoss
 from torch import Tensor
 from torch.optim import SGD
 
-
-
 class CSVDataset(Dataset):
     ## load the dataset
     def __init__(self, path):
@@ -46,7 +44,6 @@ class MLP(Module):
         self.act2 = Sigmoid()
         self.hidden3 = Linear(8,1)
         xavier_uniform_(self.hidden3.weight)
-
     ## forward prop
     def forward(self, X):
         X = self.hidden1(X)
@@ -55,8 +52,6 @@ class MLP(Module):
         X = self.act2(X)
         X = self.hidden3(X)
         return X
-    
-
 def prepare_data(path):
     dataset = CSVDataset(path)
     train, test = dataset.get_splits()
@@ -74,7 +69,6 @@ def train_model(train_dl, model):
             loss = criterion(yhat, targets)
             loss.backward()
             optimizer.step()
-
 def evaluate_model(test_dl, model):
     predictions, actuals = list(), list()
     for i, (inputs, targets) in enumerate(test_dl):
@@ -84,18 +78,15 @@ def evaluate_model(test_dl, model):
         actual = actual.reshape((len(actual), 1))
         predictions.append(yhat)
         actuals.append(actual)
-
     predictions, actuals = vstack(predictions), vstack(actuals)
     mse = mean_squared_error(actuals, predictions)
     return mse
-
 
 def predict(row, model):
     row  = Tensor([row])
     yhat = model(row)
     yhat = yhat.detach().numpy()
     return yhat 
-
 path = 'https://raw.githubusercontent.com/jbrownlee/Datasets/master/housing.csv'
 train_dl, test_dl = prepare_data(path)
 print(len(train_dl.dataset), len(test_dl.dataset))
@@ -107,4 +98,3 @@ print('MSE: %.3f, RMSE: %.3f' % (mse, sqrt(mse)))
 row = [0.00632,18.00,2.310,0,0.5380,6.5750,65.20,4.0900,1,296.0,15.30,396.90,4.98]
 yhat = predict(row, model)
 print('Predicted: %.3f' % yhat)
-
