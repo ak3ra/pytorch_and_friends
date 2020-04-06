@@ -44,6 +44,18 @@ class MLP(Module):
         self.hidden3 = Linear(8,1)
         xavier_uniform_(self.hidden3.weight)
 
+    ## forward prop
+    def forward(self, X):
+        X = self.hidden1(X)
+        X = self.act1(X)
+        X = self.hidden2(X)
+        X = self.act2(X)
+        X = self.hidden3(X)
+        return X
     
-        
+
+def prepare_data(path):
+    dataset = CSVDataset(path)
+    train, test = dataset.get_splits()
+    train_dl = Data
 
