@@ -57,5 +57,21 @@ class MLP(Module):
 def prepare_data(path):
     dataset = CSVDataset(path)
     train, test = dataset.get_splits()
-    train_dl = Data
+    train_dl = DataLoader(train, batch_size=32, shuffle=True)
+    test_dl = DataLoader(test, batch_size=1024, shuffle = False)
+    return test_dl, train_dl
 
+def train_model(train_dl, model):
+    criterion = MSELoss()
+    optimizer = SGD(model.parameters(), lr = 0.01, momentum = 0.9)
+    for epoch in range(100):
+        for i, (inputs, targets) in enumerate(train_dl):
+            optimizer.zero_grad()
+            yhat = model(inputs)
+            loss = criterion(yhat, targets)
+            loss.backward()
+            optimizer.step()
+
+def evaluate_model(test_dl, model):
+    predictions, actuals = list(), list()
+    
