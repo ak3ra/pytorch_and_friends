@@ -88,3 +88,13 @@ def evaluate_model(test_dl, model):
     mse = means_squared_error(actuals, predictions)
     return mse
 
+
+def predict(row, model):
+    row  = Tensor([row])
+    yhat = model(row)
+    yhat = yhat.detach().numpy()
+    return yhat 
+
+path = 'https://raw.githubusercontent.com/jbrownlee/Datasets/master/housing.csv'
+
+
