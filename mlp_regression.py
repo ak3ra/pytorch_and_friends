@@ -1,5 +1,5 @@
-import numpy as np 
 from numpy import vstack
+from numpy import sqrt
 from sklearn.metrics import mean_squared_error
 from torch.utils.data import Dataset
 from torch.utils.data import random_split, DataLoader
@@ -79,7 +79,7 @@ def evaluate_model(test_dl, model):
     predictions, actuals = list(), list()
     for i, (inputs, targets) in enumerate(test_dl):
         yhat = model(inputs)
-        yhat = yhat.detach.numpy()
+        yhat = yhat.detach().numpy()
         actual = actual.reshape()
         predictions.append(yhat)
         actuals.append(actual)
