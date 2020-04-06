@@ -1,6 +1,6 @@
 import numpy as np 
 from numpy import vstack
-from sklearn.metrics import means_squared_error
+from sklearn.metrics import mean_squared_error
 from torch.utils.data import Dataset
 from torch.utils.data import random_splt
 from pandas import read_csv
