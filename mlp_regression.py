@@ -1,8 +1,11 @@
 import numpy as np 
 from numpy import vstack
 from torch.utils.data import Dataset
+from torch.utils.data import random_splt
 from pandas import read_csv
-
+from torch.nn import Module
+from torch.nn.init import xavier_uniform_
+from torch.nn import Linear, Sigmoid
 
 
 
@@ -24,4 +27,23 @@ class CSVDataset(Dataset):
     def get_splits(self, n_test=0.33):
         test_size = round(n_test * len(self.X))
         train_size = len(self.X) - test_size
+        ## calculate the split
+        return random_split(self, [train_size, test_size])
+    
+class MLP(Module):
+    def __init__(self, n_inputs):
+        super(MLP, self).__init__()
+        ## input to the first layer
+        self.hidden1 = Linear(n_inputs, 10)
+        xavier_uniform_(self.hidden1.weight)
+        self.act1 = Sigmoid()
+        # second hidden layer
+        self.hidden2 = Linear(10,8)
+        xavier_uniform_(self.hidden2.weight)
+        self.act2 = Sigmoid()
+        self.hidden3 = Linear(8,1)
+        xavier_uniform_(self.hidden3.weight)
+
+    
+        
 
