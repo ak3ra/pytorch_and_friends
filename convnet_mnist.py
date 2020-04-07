@@ -10,6 +10,9 @@ from torch.nn import ReLU,Softmax
 from torch.optim import SGD
 from torch.nn import Conv2d, MaxPool2d
 from torch.nn import Linear,CrossEntropyLoss, Module
+from torch.utils.tensorboard import SummaryWriter
+
+writer = SummaryWriter()
 
 
 class CNN(Module):
@@ -69,7 +72,9 @@ def train_model(train_dl, model):
             loss = criterion(yhat, targets)
             loss.backward()
             optimizer.step()
-            print("Train loss", loss)
+        writer.add_scalar('Epoch Train Loss', loss, epoch)
+
+
 
 def evaluate_model(test_dl, model):
     predictions, actuals = list(), list()
@@ -88,6 +93,8 @@ def evaluate_model(test_dl, model):
 ## Location to save or load the data
 path = '~/.torch/datasets/mnist'
 ## Transforms to perform to the images
+
+
 train_dl, test_dl = prepare_data(path)
 print(len(train_dl.dataset), len(test_dl.dataset))
 # define the network
