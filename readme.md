@@ -5,5 +5,5 @@ Scripts for Different Pytorch tasks
     - Convnets for Image classification
 
 derived from assorted learning sources: 
-    1. Machinelearningmastery.com
-    2. pytorch.org
+    - Machinelearningmastery.com
+    - pytorch.org
