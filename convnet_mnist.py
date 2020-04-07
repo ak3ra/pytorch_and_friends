@@ -69,6 +69,7 @@ def train_model(train_dl, model):
             loss = criterion(yhat, targets)
             loss.backward()
             optimizer.step()
+            print("Train loss", loss)
 
 def evaluate_model(test_dl, model):
     predictions, actuals = list(), list()
@@ -81,6 +82,7 @@ def evaluate_model(test_dl, model):
         yhat = yhat.reshape((len(yhat), 1))
     predictions,actuals = vstack(predictions), vstack(actuals)
     acc = accuracy_score(actuals, predictions)
+    print("val_acc:",acc)
     return acc
 
 ## Location to save or load the data
