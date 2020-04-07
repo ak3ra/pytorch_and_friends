@@ -72,6 +72,7 @@ def train_model(train_dl, model):
             loss = criterion(yhat, targets)
             loss.backward()
             optimizer.step()
+            writer.add_scalar('Batch Train Loss', loss, i)
         writer.add_scalar('Epoch Train Loss', loss, epoch)
 
 
