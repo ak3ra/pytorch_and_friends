@@ -18,5 +18,9 @@ test_dl = DataLoader(test, batch_size= 32, shuffle=True)
 i, (inputs, targets) = next(enumerate(train_dl))
 ## plot some images
 for i in range(25):
+    pyplot.subplot(5,5, i+1)
+    pyplot.imshow(inputs[i][0], cmap='gray')
+
+pyplot.show()
 
 
