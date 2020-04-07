@@ -5,9 +5,10 @@ from torch.utils.data import DataLoader
 from torchvision.datasets import MNIST
 from torchvision.transforms import Compose, ToTensor
 from matplotlib import pyplot
-from torch.nn.init import kaiming_uniform_
-from torch.nn import ReLU
-from torch.nn import Conv2d
+from torch.nn.init import kaiming_uniform_,xavier_uniform_
+from torch.nn import ReLU,Softmax
+from torch.optim import SGD
+from torch.nn import Conv2d, MaxPool2d
 from torch.nn import Linear,CrossEntropyLoss, Module
 
 
@@ -27,7 +28,7 @@ class CNN(Module):
         self.act3 = ReLU()
         self.hidden4 = Linear(100, 10)
         xavier_uniform_(self.hidden4.weight)
-        self.act4 = SoftMax(dim=1)
+        self.act4 = Softmax(dim=1)
 
     def forward(self, X):
         X = self.hidden1(X)
@@ -58,7 +59,7 @@ def prepare_data(path):
 
 def train_model(train_dl, model):
     criterion = CrossEntropyLoss()
-    optimizer = SGD(model.parameters, lr = 0.01, momentum=0.9)
+    optimizer = SGD(model.parameters(), lr = 0.01, momentum=0.9)
     ## enumerate epochs
     for epoch in range(10):
         ## Enumerate minibatches
@@ -66,7 +67,7 @@ def train_model(train_dl, model):
             optimizer.zero_grad()
             yhat = model(inputs)
             loss = criterion(yhat, targets)
-            loss.backwards()
+            loss.backward()
             optimizer.step()
 
 def evaluate_model(test_dl, model):
