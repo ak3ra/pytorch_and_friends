@@ -57,7 +57,17 @@ def prepare_data(path):
     return train_dl, test_dl
 
 def train_model(train_dl, model):
-    criterion = MSELoss
+    criterion = CrossEntropyLoss()
+    optimizer = SGD(model.parameters, lr = 0.01, momentum=0.9)
+    ## enumerate epochs
+    for epoch in range(10):
+        ## Enumerate minibatches
+        for i, (inputs, targets) in enumerate(train_dl):
+            optimizer.zero_grad()
+            yhat = model(inputs)
+            loss = criterion(yhat, targets)
+            loss.backwards()
+            optimizer.step()
 
 
 ## Location to save or load the data
