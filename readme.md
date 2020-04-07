@@ -4,4 +4,6 @@ Scripts for Different Pytorch tasks
     - MLP Regression
     - Convnets for Image classification
 
-learning source: https://machinelearningmastery.com
+derived from assorted learning sources: 
+    1. Machinelearningmastery.com
+    2. pytorch.org
