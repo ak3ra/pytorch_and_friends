@@ -51,7 +51,8 @@ def prepare_data(path):
     train = MNIST(path, train=True, download=True, transform = trans)
     test = MNIST(path, train =False, download = True, transform = trans)
     ## Define how to enumerate the datasets
-    
+    train_dl = DataLoader(train,batch_size = 32, shuffle=True)
+    test_dl = DataLoader(test, batch_size= 32, shuffle=False)
     ## How to enumerate the datasets
     return train_dl, test_dl
 
@@ -84,15 +85,12 @@ def evaluate_model(test_dl, model):
 ## Location to save or load the data
 path = '~/.torch/datasets/mnist'
 ## Transforms to perform to the images
-train_dl = DataLoader(train,batch_size = 32, shuffle=True)
-test_dl = DataLoader(test, batch_size= 32, shuffle=False)
-
-i, (inputs, targets) = next(enumerate(train_dl))
-## plot some images
-for i in range(25):
-    pyplot.subplot(5,5, i+1)
-    pyplot.imshow(inputs[i][0], cmap='gray')
-
-pyplot.show()
-
-
+train_dl, test_dl = prepare_data(path)
+print(len(train_dl.dataset), len(test_dl.dataset))
+# define the network
+model = CNN(1)
+# # train the model
+train_model(train_dl, model)
+# evaluate the model
+acc = evaluate_model(test_dl, model)
+print('Accuracy: %.3f' % acc)
