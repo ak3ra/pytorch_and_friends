@@ -13,3 +13,7 @@ hidden = (torch.randn(1,1,3),
 
 for i in inputs:
     out, hidden = lstm(i.view(1,1,-1), hidden)
+
+inputs = torch.cat(inputs).view(len(inputs), 1, -1)
+hidden = (torch.randn(1,1,3), torch.randn(1,1,3))
+out, hidden = lstm(inputs, hidden)
