@@ -48,4 +48,5 @@ HIDDEN_DIM = 6
 class LSTMTagger(nn.Module):
     def __init__(self,embedding_dim, hiddend_dim,vocab_size, tagset_size):
         super(LSTMTagger, self).__init__()
-
+        self.hiddend_dim = hiddend_dim
+        self.word_embedding = nn.Embedding(vocab_size, embedding_dim)
