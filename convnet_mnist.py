@@ -1,4 +1,5 @@
-import numpy as np
+import numpy as np 
+from numpy import vstack
 import pandas as pd
 from sklearn.metrics import accuracy_score
 from torch.utils.data import DataLoader
@@ -89,6 +90,7 @@ def evaluate_model(test_dl, model):
     predictions,actuals = vstack(predictions), vstack(actuals)
     acc = accuracy_score(actuals, predictions)
     print("val_acc:",acc)
+    writer.add_scalar('Val Acc', acc, epoch)
     return acc
 
 ## Location to save or load the data
