@@ -20,3 +20,16 @@ out, hidden = lstm(inputs, hidden)
 print(out)
 print(hidden)
 
+## prepare dataset
+
+def prepare_sequence(seq, to_ix):
+    idx = [to_ix[w] for w in seq]
+    return torch.tensor(idxs, dtype=torch.long)
+
+training_data = [
+    ("Akera is a mathematician".split(),["DET","NN", "V", "DET", "NN"]),
+    ("Everybody read the Harry Potter books".split(),["NN","V", "DET", "NN"])
+
+]
+
+word_to_ix = {}
