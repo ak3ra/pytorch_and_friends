@@ -43,3 +43,9 @@ tag_to_idx = {"DET":0, "NN":1, "V":2}
 EMBEDDING_DIM = 6
 HIDDEN_DIM = 6
 
+# Creating the model
+
+class LSTMTagger(nn.Module):
+    def __init__(self,embedding_dim, hiddend_dim,vocab_size, tagset_size):
+        super(LSTMTagger, self).__init__()
+
