@@ -23,12 +23,12 @@ print(hidden)
 ## prepare dataset
 
 def prepare_sequence(seq, to_ix):
-    idx = [to_ix[w] for w in seq]
+    idxs = [to_ix[w] for w in seq]
     return torch.tensor(idxs, dtype=torch.long)
 
 training_data = [
-    ("Akera is a mathematician".split(),["DET","NN", "V", "DET", "NN"]),
-    ("Everybody read the Harry Potter books".split(),["NN","V", "DET", "NN"])
+    ("The dog ate the apple".split(),["DET","NN", "V", "DET", "NN"]),
+    ("Everybody read that book".split(),["NN","V", "DET", "NN"])
 
 ]
 
@@ -55,8 +55,10 @@ class LSTMTagger(nn.Module):
         self.hidden2tag = nn.Linear(hidden_dim, tagset_size)
 
     def forward(self, sentence):
-        embeds = self.word_embeddings(sentence)
+        embeds = self.word_embedding(sentence)
         lstm_out,_ = self.lstm(embeds.view(len(sentence), 1, -1))
+        # lstm_out, _= self.lstm(embeds.view(len(sentence), 1, -1))
+
         tag_space = self.hidden2tag(lstm_out.view(len(sentence),-1))
         tag_scores = F.log_softmax(tag_space, dim=1)
         return tag_scores
