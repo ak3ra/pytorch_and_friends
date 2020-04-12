@@ -38,7 +38,7 @@ for sent, tags in training_data:
         if word not in word_to_ix:
             word_to_ix[word] = len(word_to_ix)
 print(word_to_ix)
-tag_to_idx = {"DET":0, "NN":1, "V":2}
+tag_to_ix = {"DET":0, "NN":1, "V":2}
 
 EMBEDDING_DIM = 6
 HIDDEN_DIM = 6
@@ -62,9 +62,9 @@ class LSTMTagger(nn.Module):
         return tag_scores
 
     ## train the model
-    model = LSTMTagger(EMBEDDING_DIM, HIDDEN_DIM, len(word_to_ix), len(tag_to_ix))
-    loss_function = nn.NLLLoss()
-    optimizer = optim.SGD(model.parameters(), lr=0.1)
+model = LSTMTagger(EMBEDDING_DIM, HIDDEN_DIM, len(word_to_ix), len(tag_to_ix))
+loss_function = nn.NLLLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.1)
 
 with torch.no_grad():
     inputs = prepare_sequence(training_data[0][0],word_to_ix)
