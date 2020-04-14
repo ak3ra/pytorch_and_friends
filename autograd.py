@@ -1,2 +1,5 @@
-import torch
-tsr = torch.Tensor(3,5)
+import torch 
+
+## tensor
+x = torch.ones(2,2, requires_grad = True)
+print(x)
