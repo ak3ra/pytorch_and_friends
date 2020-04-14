@@ -18,3 +18,4 @@ class net(nn.Module):
 
 myNet = net()
 print(list(myNet.parameters())) 
+
