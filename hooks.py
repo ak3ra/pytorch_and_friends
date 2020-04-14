@@ -74,4 +74,32 @@ class mynetwork(nn.Module):
 net = mynetwork()
 print(list(net.parameters()))
 
-        
+
+### For weight initialization ####
+
+import matplotlib.pyplot as plt
+# %matplotlib inline
+
+class myneto(nn.Module):
+
+    def __init__(self):
+        super().__init__()
+        self.conv = nn.Conv2d(10,10,3)
+        self.bn = nn.BatchNorm2d(10)
+
+    def weights_init(self):
+        for module in self.modules():
+            if isinstance(module, nn.Conv2d):
+                nn.init.normal_(module.weight, mean =0, std = 1)
+                nn.init.constant_(module.bias, 0)
+net = myneto()
+net.weights_init()
+
+for module in net.modules():
+    if isinstance in net.modules():
+        weights = module.weight
+        weights = weights.reshape(-1).detach().cpu.numpy()
+        print(module.bias)
+        plt.hist(weights)
+        plt.show()
+        plt.save("weights.png")
