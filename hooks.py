@@ -57,4 +57,21 @@ class mynet(nn.Module):
             x = layer(x)
 
 net = mynet()
+# print(list(net.parameters()))
+
+################ wrapping the list within the nn.ModuleList class 
+
+layer_list = [nn.Conv2d(5,5,3), nn.BatchNorm2d(5), nn.Linear(5,2)]
+
+class mynetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layers = nn.ModuleList(layer_list)
+    def forward(self, x):
+        for layer in self.layers:
+            x = layer(x)
+
+net = mynetwork()
 print(list(net.parameters()))
+
+        
