@@ -44,4 +44,17 @@ class net3(nn.Module):
     def forward(self, x):
         return self.linear(x)
 
-        
+########### simplification by using a list ######
+
+layer_list = [nn.Conv2d(5,5,3), nn.BatchNorm2d(5), nn.Linear(5,2)]
+
+class mynet(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.layers = layer_list
+    def forward(self, x):
+        for layer in self.layers:
+            x = layer(x)
+
+net = mynet()
+print(list(net.parameters()))
