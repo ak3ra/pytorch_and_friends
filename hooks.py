@@ -32,3 +32,16 @@ class net2(nn.Module):
     
 new_net = net2()
 print(list(new_net.parameters()))
+
+###################
+
+class net3(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv = nn.Linear(10, 5)
+        self.net = net2()
+
+    def forward(self, x):
+        return self.linear(x)
+
+        
